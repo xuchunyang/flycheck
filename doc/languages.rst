@@ -734,8 +734,6 @@ to view the docstring of the syntax checker.  Likewise, you may use
 
       .. syntax-checker-config-file:: flycheck-markdown-markdownlint-cli-config
 
-         Path to configuration file.
-
    .. syntax-checker:: markdown-mdl
 
       Check Markdown with `markdownlint <https://github.com/mivok/markdownlint/>`_.

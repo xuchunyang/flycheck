@@ -108,6 +108,9 @@ nitpick_ignore = [
     ('any', 'package-archives'),
     ('any', 'user-init-file'),
     ('any', 'user-emacs-directory'),
+    ('any', 'check-declare-file'),
+    ('any', 'declare-function'),
+    ('any', 'exec-path'),
 ]
 
 # HTML settings

@@ -61,7 +61,7 @@ before_install:
   - if [[ -n $EMACS_VERSION ]]; then make -f emacs-travis.mk install_emacs; fi
   - if [[ -n $EMACS_VERSION ]]; then make -f emacs-travis.mk install_cask; fi
   - if [[ -n $EMACS_VERSION ]]; then emacs --version; fi
-  - if [[ -n $EMACS_VERSION ]]; then .travis/install_dependencies.sh
+  - if [[ -n $EMACS_VERSION ]]; then .travis/install_dependencies.sh; fi
 install:
   - if [[ -n $EMACS_VERSION ]]; then make init; fi
   # Install requirements of documentation

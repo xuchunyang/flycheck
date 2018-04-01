@@ -48,6 +48,6 @@ pip install \
     proselint
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y
-rustup install stable
+export PATH=$HOME/.cargo/bin:$PATH
 
 curl -sSL https://get.haskellstack.org/ | sh

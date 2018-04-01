@@ -12,6 +12,7 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - sourceline: "deb http://master.dl.sourceforge.net/project/d-apt/ d-apt main"
     packages:
       - asciidoc
       - cfengine2
@@ -38,6 +39,7 @@ addons:
       - systemd
       - lacheck
       - chktex
+      - dmd-compiler
 
 matrix:
   # Don’t wait for jobs that are allowed to fail

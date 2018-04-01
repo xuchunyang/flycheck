@@ -20,7 +20,7 @@ go get -u \
    github.com/golang/lint/golint \
    honnef.co/go/tools/cmd/megacheck
 
-luarocks install luacheck
+sudo luarocks install luacheck
 
 npm install --global \
     coffeelint \
@@ -46,3 +46,8 @@ pip install \
     pylint \
     sphinx \
     proselint
+
+curl https://sh.rustup.rs -sSf | sh
+rustup install stable
+
+curl -sSL https://get.haskellstack.org/ | sh

@@ -40,6 +40,8 @@ addons:
       - lacheck
       - chktex
       - dmd-compiler
+      - zsh
+      - llvm
 
 matrix:
   # Don’t wait for jobs that are allowed to fail

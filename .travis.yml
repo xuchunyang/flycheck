@@ -12,7 +12,7 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - sourceline: "deb http://master.dl.sourceforge.net/project/d-apt/ d-apt main"
+      - sourceline: 'deb http://master.dl.sourceforge.net/project/d-apt/ d-apt main'
     packages:
       - asciidoc
       - cfengine2

@@ -19,7 +19,7 @@ npm install --global \
     csslint \
     eslint \
     handlebars \
-    js-yaml
+    js-yaml \
     jscs \
     jsonlint \
     less \

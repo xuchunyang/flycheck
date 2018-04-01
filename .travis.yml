@@ -59,6 +59,10 @@ cache:
       # Cache Cask bootstrap dependencies
       - "$HOME/.emacs.d/.cask"
 env:
+  global:
+    - CC=gcc-6
+    - LC_ALL=C.UTF-8
+    - LANG=C.UTF-8
   matrix:
     # - EMACS_VERSION=24.5
     # - EMACS_VERSION=25.2

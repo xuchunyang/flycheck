@@ -28,7 +28,6 @@ addons:
       - racket
       - scala
       - perl
-      - php
 
 matrix:
   # Don’t wait for jobs that are allowed to fail

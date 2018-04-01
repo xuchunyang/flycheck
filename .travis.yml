@@ -24,15 +24,15 @@ cache:
       - "$HOME/.emacs.d/.cask"
 env:
   matrix:
-    - EMACS_VERSION=24.5
-    - EMACS_VERSION=25.2
+    # - EMACS_VERSION=24.5
+    # - EMACS_VERSION=25.2
     - EMACS_VERSION=25.3
-    - EMACS_VERSION=26.0.91 PRETEST=yes
-    - EMACS_VERSION=snapshot
+    # - EMACS_VERSION=26.0.91 PRETEST=yes
+    # - EMACS_VERSION=snapshot
     # A special job to build the manual
-    - BUILD_MANUAL=yes
+    # - BUILD_MANUAL=yes
     # And another special job to lint our Python code
-    - LINT_PYTHON=yes
+    # - LINT_PYTHON=yes
 before_install:
   - export PATH="$HOME/bin:$PATH"
   - travis_retry wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
@@ -53,7 +53,7 @@ script:
   - if [[ -n $EMACS_VERSION ]]; then make unit; fi
   - if [[ -n $EMACS_VERSION ]]; then make specs; fi
   # Run those integration tests that we can safely run on Travis CI
-  - if [[ -n $EMACS_VERSION ]]; then make LANGUAGE=emacs-lisp integ; fi
+  - if [[ -n $EMACS_VERSION ]]; then make integ; fi
   # Build and deploy the manual
   - if [[ $BUILD_MANUAL == yes ]]; then make -C doc SPHINXOPTS=-n html; fi
   # Lint our Python code

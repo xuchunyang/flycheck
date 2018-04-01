@@ -7,6 +7,30 @@ python:
 # and https://github.com/moby/moby/issues/22801
 sudo: required
 dist: trusty
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:ubuntu-toolchain-r/ppa'
+    packages:
+      - asciidoc
+      - asciidoctor
+      - cfengine3
+      - chicken-bin
+      - coffeescript
+      - coq
+      - cppcheck
+      - gcc-6
+      - gfortran
+      - ghc
+      - gnat
+      - groovy
+      - hlint
+      - jruby
+      - racket
+      - ruby-haml
+      - scala
+
 matrix:
   # Don’t wait for jobs that are allowed to fail
   fast_finish: true
@@ -47,11 +71,11 @@ install:
   - if [[ $LINT_PYTHON == yes ]]; then pip install -r maint/requirements.txt; fi
 script:
   # Check formatting on Emacs 25 (our formatting rules don’t work on Emacs 24).
-  - if [[ $EMACS_VERSION == 25.* ]]; then make check; fi
+  # - if [[ $EMACS_VERSION == 25.* ]]; then make check; fi
   # Compile and test
   - if [[ -n $EMACS_VERSION ]]; then make compile; fi
-  - if [[ -n $EMACS_VERSION ]]; then make unit; fi
-  - if [[ -n $EMACS_VERSION ]]; then make specs; fi
+  # - if [[ -n $EMACS_VERSION ]]; then make unit; fi
+  # - if [[ -n $EMACS_VERSION ]]; then make specs; fi
   # Run those integration tests that we can safely run on Travis CI
   - if [[ -n $EMACS_VERSION ]]; then make integ; fi
   # Build and deploy the manual

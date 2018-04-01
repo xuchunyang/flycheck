@@ -14,13 +14,23 @@ gem install --no-document \
     sqlint \
     foodcritic
 
+go get -u \
+   github.com/kisielk/errcheck \
+   github.com/mdempsky/unconvert \
+   github.com/golang/lint/golint \
+   honnef.co/go/tools/cmd/megacheck
+
+luarocks install luacheck
+
 npm install --global \
+    coffeelint \
     coffeescript \
     csslint \
     eslint \
     handlebars \
     js-yaml \
     jscs \
+    jshint \
     jsonlint \
     less \
     markdownlint-cli \
@@ -29,3 +39,10 @@ npm install --global \
     standard \
     tslint \
     typescript
+
+pip install \
+    schema-salad \
+    docutils \
+    pylint \
+    sphinx \
+    proselint

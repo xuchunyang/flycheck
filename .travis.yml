@@ -28,6 +28,16 @@ addons:
       - racket
       - scala
       - perl
+      - luarocks
+      - tidy
+      - protobuf-compiler
+      - puppet
+      - verilator
+      - xmlstarlet
+      - texinfo
+      - systemd
+      - lacheck
+      - chktex
 
 matrix:
   # Don’t wait for jobs that are allowed to fail
@@ -45,6 +55,7 @@ cache:
       # Cache Cask bootstrap dependencies
       - "$HOME/.emacs.d/.cask"
 env:
+  - CC=gcc-6
   matrix:
     # - EMACS_VERSION=24.5
     # - EMACS_VERSION=25.2

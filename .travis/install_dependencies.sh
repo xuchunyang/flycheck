@@ -47,7 +47,7 @@ pip install \
     sphinx \
     proselint
 
-curl https://sh.rustup.rs -sSf | sh
+curl https://sh.rustup.rs -sSf | sh -s -- -y
 rustup install stable
 
 curl -sSL https://get.haskellstack.org/ | sh

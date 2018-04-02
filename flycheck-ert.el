@@ -254,10 +254,7 @@ case, including assertions and setup code."
          (keys (car keys-and-body))
          (default-tags '(syntax-checker external-tool)))
     `(ert-deftest ,full-name ()
-       :expected-result
-       (list 'or
-             '(satisfies flycheck-ert-syntax-check-timed-out-p)
-             ,(or (plist-get keys :expected-result) :passed))
+       :expected-result ,(or (plist-get keys :expected-result) :passed)
        :tags (append ',(append default-tags language-tags checker-tags)
                      ,(plist-get keys :tags))
        ,@(mapcar (lambda (c) `(skip-unless

@@ -76,7 +76,7 @@ before_install:
 install:
   - if [[ -n $EMACS_VERSION ]]; then make init; fi
   # Install requirements of integration tests
-  - if [[ -n $EMACS_VERSION ]]; then .travis/install_dependencies.sh; fi
+  - if [[ -n $EMACS_VERSION ]]; then .travis/install-dependencies.sh; fi
   # Update PATH for checker tools
   - if [[ -n $EMACS_VERSION ]]; then export PATH=$PATH:$HOME/.cargo/bin; fi
   # Install requirements of documentation

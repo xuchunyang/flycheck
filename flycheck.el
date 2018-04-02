@@ -8065,7 +8065,7 @@ See URL `https://www.haskell.org/ghc/'."
              (one-or-more " ") (one-or-more not-newline)
              (zero-or-more "\n"
                            (one-or-more " ")
-                           (one-or-more not-newline)))
+                           (one-or-more (not (any ?\n ?|)))))
             line-end)
    (error line-start (file-name) ":" line ":" column ":" (optional " error:")
           (or (message (one-or-more not-newline))
@@ -8074,7 +8074,7 @@ See URL `https://www.haskell.org/ghc/'."
                     (one-or-more " ") (one-or-more not-newline)
                     (zero-or-more "\n"
                                   (one-or-more " ")
-                                  (one-or-more not-newline)))))
+                                  (one-or-more (not (any ?\n ?|)))))))
           line-end))
   :error-filter
   (lambda (errors)

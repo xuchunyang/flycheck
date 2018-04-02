@@ -6,6 +6,8 @@
 
 # For GCC-6
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+# For GHC 8
+sudo add-apt-repository ppa:hvr/ghc -y
 
 # For clang-5
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
@@ -14,16 +16,16 @@ echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee
 sudo apt-get -qq update
 sudo apt-get install -y \
      asciidoc \
+     asciidoctor \
      chicken-bin \
      clang-5.0 \
      coq \
      cppcheck \
      gcc-6 \
      g++-6 \
+     ghc-8.2.2 \
      gfortran \
      gnat \
-     groovy \
-     hlint \
      jruby \
      racket \
      scala \
@@ -44,6 +46,10 @@ sudo apt-get install -y \
 sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
 sudo ln -s /usr/bin/clang-5.0 /usr/local/bin/clang
 sudo ln -s /usr/bin/llc-5.0 /usr/local/bin/llc
+
+if ! hash ghc 2>/dev/null; then
+    echo export PATH=/opt/ghc/bin:'$PATH' >> ~/.profile
+fi
 
      # dmd-compiler \
 
@@ -102,9 +108,13 @@ else
     rustup update
 fi
 
-# curl -sSL https://get.haskellstack.org/ | sh
-# stack setup
-
+if ! hash stack 2>/dev/null; then
+    curl -sSL https://get.haskellstack.org/ | sh
+    echo export PATH=$HOME/.local/bin:'$PATH' >> ~/.profile
+    stack setup
+else
+    stack upgrade
+fi
 
 #     echo "Installing packages from CPAN..."
 #     sudo cpanm Perl::Critic

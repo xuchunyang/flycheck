@@ -4,12 +4,22 @@
 
 # - sourceline: 'deb http://master.dl.sourceforge.net/project/d-apt/ d-apt
 
+# For GCC-6
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+
+# For clang-5
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main" | sudo tee -a /etc/apt/sources.list > /dev/null
+
 sudo apt-get -qq update
 sudo apt-get install -y \
      asciidoc \
      chicken-bin \
+     clang-5.0 \
      coq \
      cppcheck \
+     gcc-6 \
+     g++-6 \
      gfortran \
      gnat \
      groovy \
@@ -28,8 +38,12 @@ sudo apt-get install -y \
      systemd \
      lacheck \
      chktex \
-     zsh \
-     llvm
+     zsh
+
+# TODO: override default GCC on Travis
+sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+sudo ln -s /usr/bin/clang-5.0 /usr/local/bin/clang
+sudo ln -s /usr/bin/llc-5.0 /usr/local/bin/llc
 
      # dmd-compiler \
 

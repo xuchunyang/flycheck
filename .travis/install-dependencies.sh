@@ -40,6 +40,7 @@ sudo apt-get install -y \
      systemd \
      lacheck \
      chktex \
+     stow \
      zsh
 
 # TODO: override default GCC on Travis
@@ -76,23 +77,32 @@ fi
 
 sudo luarocks install luacheck
 
-# npm install --global \
-#     coffeelint \
-#     coffeescript \
-#     csslint \
-#     eslint \
-#     handlebars \
-#     js-yaml \
-#     jscs \
-#     jshint \
-#     jsonlint \
-#     less \
-#     markdownlint-cli \
-#     pug-cli \
-#     semistandard \
-#     standard \
-#     tslint \
-#     typescript
+if ! hash npm 2>/dev/null; then
+    wget https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz
+    tar xf node-v8.11.1-linux-x64.tar.xz
+    sudo stow --target /usr/local node-v8.11.1-linux-x64
+fi
+
+npm install --global \
+    coffeelint \
+    coffeescript \
+    csslint \
+    eslint \
+    handlebars \
+    js-yaml \
+    jscs \
+    jshint \
+    jsonlint \
+    less \
+    markdownlint-cli \
+    pug-cli \
+    semistandard \
+    standard \
+    tslint \
+    typescript
+
+# Refresh any binaries added to local node bin/ folder
+sudo stow --target /usr/local node-v8.11.1-linux-x64
 
 # pip install \
 #     schema-salad \

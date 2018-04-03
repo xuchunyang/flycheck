@@ -3457,9 +3457,9 @@ Why not:
      "language/javascript/style.js" flycheck-test-javascript-modes
      '(3 10 error "Missing space before function parentheses."
          :checker javascript-standard)
-     '(4 2 error "Unexpected tab character."
+     '(4 1 error "Expected indentation of 2 spaces but found 1 tab."
          :checker javascript-standard)
-     '(4 2 error "Expected indentation of 2 spaces but found 1 tab."
+     '(4 2 error "Unexpected tab character."
          :checker javascript-standard)
      '(4 6 error "'foo' is assigned a value but never used."
          :checker javascript-standard)
@@ -3477,9 +3477,9 @@ Why not:
      "language/javascript/style.js" flycheck-test-javascript-modes
      '(3 10 error "Missing space before function parentheses."
          :checker javascript-standard)
-     '(4 2 error "Unexpected tab character."
+     '(4 1 error "Expected indentation of 2 spaces but found 1 tab."
          :checker javascript-standard)
-     '(4 2 error "Expected indentation of 2 spaces but found 1 tab."
+     '(4 2 error "Unexpected tab character."
          :checker javascript-standard)
      '(4 6 error "'foo' is assigned a value but never used."
          :checker javascript-standard)
@@ -3862,7 +3862,7 @@ Why not:
    "language/markdown.md" 'markdown-mode
    '(1 nil error "First header should be a top level header [Expected: h1; Actual: h2]"
        :id "MD002/first-header-h1" :checker markdown-markdownlint-cli)
-   '(1 nil error "First line in file should be a top level header [Context: "## Second Header First"]"
+   '(1 nil error "First line in file should be a top level header [Context: \"## Second Header First\"]"
        :id "MD041/first-line-h1" :checker markdown-markdownlint-cli)))
 
 (flycheck-ert-def-checker-test markdown-mdl markdown nil

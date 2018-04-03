@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 512
+    vb.memory = 4096            # 2048Mb is not enough for `stack`
     vb.cpus = 2
   end
   #

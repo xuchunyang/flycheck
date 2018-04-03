@@ -116,6 +116,10 @@ else
     stack upgrade
 fi
 
+if ! hash hlint 2>/dev/null; then
+    stack install hlint         # Takes forever and needs 4Gb of RAM...
+fi
+
 #     echo "Installing packages from CPAN..."
 #     sudo cpanm Perl::Critic
 #     sudo chmod -R a+rX /usr/share/perl5 /usr/lib/perl5

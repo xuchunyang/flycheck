@@ -8,98 +8,20 @@ python:
 sudo: required
 dist: trusty
 
-addons:
-  apt:
-    sources:
-      - sourceline: 'deb http://master.dl.sourceforge.net/project/d-apt/ d-apt main'
-    packages:
-      - asciidoc
-      - cfengine2
-      - chicken-bin
-      - coq
-      - cppcheck
-      - gfortran
-      - ghc
-      - gnat
-      - groovy
-      - hlint
-      - jruby
-      - racket
-      - scala
-      - perl
-      - luarocks
-      - tidy
-      - protobuf-compiler
-      - puppet
-      - verilator
-      - xmlstarlet
-      - texinfo
-      - systemd
-      - lacheck
-      - chktex
-      - dmd-compiler
-      - zsh
-      - llvm
+services:
+  - docker
 
-matrix:
-  # Don’t wait for jobs that are allowed to fail
-  fast_finish: true
-  # Allow snapshot to fail
-  allow_failures:
-    - env: EMACS_VERSION=snapshot
-cache:
-  - pip
-  - directories:
-      # Cache stable Emacs binaries
-      - "$HOME/emacs/"
-      # Cache Flycheck dependencies
-      - ".cask/"
-      # Cache Cask bootstrap dependencies
-      - "$HOME/.emacs.d/.cask"
-env:
-  matrix:
-    # - EMACS_VERSION=24.5
-    # - EMACS_VERSION=25.2
-    - EMACS_VERSION=25.3
-    # - EMACS_VERSION=26.0.91 PRETEST=yes
-    # - EMACS_VERSION=snapshot
-    # A special job to build the manual
-    # - BUILD_MANUAL=yes
-    # And another special job to lint our Python code
-    # - LINT_PYTHON=yes
 before_install:
-  - export PATH="$HOME/bin:$PATH"
-  - travis_retry wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
-  - if [[ -n $EMACS_VERSION ]]; then make -f emacs-travis.mk install_emacs; fi
-  - if [[ -n $EMACS_VERSION ]]; then make -f emacs-travis.mk install_cask; fi
-  - if [[ -n $EMACS_VERSION ]]; then emacs --version; fi
+  - docker build -t flycheck-tests docker-test
+
 install:
-  - if [[ -n $EMACS_VERSION ]]; then make init; fi
-  # Install requirements of integration tests
-  - if [[ -n $EMACS_VERSION ]]; then .travis/install-dependencies.sh; fi
-  # Update PATH for checker tools
-  - if [[ -n $EMACS_VERSION ]]; then export PATH=$PATH:$HOME/.cargo/bin; fi
-  # Install requirements of documentation
-  - if [[ $BUILD_MANUAL == yes ]]; then pip install -r doc/requirements.txt; fi
-  # Install requirements for linting
-  - if [[ $LINT_PYTHON == yes ]]; then pip install -r maint/requirements.txt; fi
+  - docker run -v $TRAVIS_BUILD_DIR:/root/flycheck -w /root/flycheck flycheck-tests /bin/bash -c "make init"
+
 script:
-  # Check formatting on Emacs 25 (our formatting rules don’t work on Emacs 24).
-  # - if [[ $EMACS_VERSION == 25.* ]]; then make check; fi
-  # Compile and test
-  - if [[ -n $EMACS_VERSION ]]; then make compile; fi
-  # - if [[ -n $EMACS_VERSION ]]; then make unit; fi
-  # - if [[ -n $EMACS_VERSION ]]; then make specs; fi
-  # Run those integration tests that we can safely run on Travis CI
-  - if [[ -n $EMACS_VERSION ]]; then make integ; fi
-  # Build and deploy the manual
-  - if [[ $BUILD_MANUAL == yes ]]; then make -C doc SPHINXOPTS=-n html; fi
-  # Lint our Python code
-  - if [[ $LINT_PYTHON == yes ]]; then make -C maint check; fi
+  - docker run -v $TRAVIS_BUILD_DIR:/root/flycheck -w /root/flycheck flycheck-tests /bin/bash -c "make integ"
+
 notifications:
   webhooks:
     urls:
       - https://webhooks.gitter.im/e/efdc5fd9433efa7c6b80
     on_success: change
-    on_failure: always
-    on_start: never

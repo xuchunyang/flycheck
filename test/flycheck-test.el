@@ -3175,18 +3175,16 @@ See https://github.com/flycheck/flycheck/issues/531 and Emacs bug #19206"))
       `(("GOPATH" . ,(flycheck-ert-resource-filename "language/go")))
     (flycheck-ert-should-syntax-check
      "language/go/src/warnings.go" 'go-mode
-     '(4 nil error "imported and not used: \"fmt\"" :checker go-build)
+     '(4 2 error "imported and not used: \"fmt\"" :checker go-build)
      '(4 2 warning "should not use dot imports" :checker go-golint)
      '(7 1 warning "exported function Warn should have comment or be unexported"
          :checker go-golint)
-     '(8 nil error "undefined: fmt in fmt.Printf" :checker go-build)
+     '(8 2 error "undefined: fmt" :checker go-build)
      '(11 1 warning "exported function Warnf should have comment or be unexported"
           :checker go-golint)
-     '(12 nil error "undefined: fmt in fmt.Printf" :checker go-build)
-     '(17 nil error "undefined: fmt in fmt.Printf" :checker go-build)
-     '(17 nil warning "arg 1 for printf verb %s of wrong type: untyped int"
-          :checker go-vet)
-     '(19 nil error "cannot use 1 (type int) as type string in argument to Warnf"
+     '(12 2 error "undefined: fmt" :checker go-build)
+     '(17 2 error "undefined: fmt" :checker go-build)
+     '(19 13 error "cannot use 1 (type int) as type string in argument to Warnf"
           :checker go-build)
      '(23 nil warning "unreachable code" :checker go-vet)
      '(25 9 warning "if block ends with a return statement, so drop this else and outdent its block"
@@ -3198,13 +3196,13 @@ See https://github.com/flycheck/flycheck/issues/531 and Emacs bug #19206"))
     (flycheck-ert-should-syntax-check "language/go/src/b1/main.go" 'go-mode)))
 
 (flycheck-ert-def-checker-test go-build go missing-package
-  (let* ((go-root (or (getenv "GOROOT") "/usr/local/go"))
-         (go-root-pkg (concat go-root "/src")))
+  (let ((go-root (or (getenv "GOROOT") "/usr/local/go"))
+        (go-path (concat (getenv "HOME") "/go")))
     (flycheck-ert-with-env '(("GOPATH" . nil))
       (flycheck-ert-should-syntax-check
        "language/go/src/b1/main.go" 'go-mode
-       `(4 2 error ,(format "cannot find package \"b2\" in any of:\n\t%s/b2 (from $GOROOT)\n\t($GOPATH not set)"
-                            go-root-pkg)
+       `(4 2 error ,(format "cannot find package \"b2\" in any of:\n\t%s/src/b2 (from $GOROOT)\n\t%s/src/b2 (from $GOPATH)"
+                            go-root go-path)
            :checker go-build)))))
 
 (flycheck-ert-def-checker-test go-build go directory-with-two-packages
@@ -3225,7 +3223,7 @@ See https://github.com/flycheck/flycheck/issues/531 and Emacs bug #19206"))
       `(("GOPATH" . ,(flycheck-ert-resource-filename "checkers/go")))
     (flycheck-ert-should-syntax-check
      "language/go/src/test/test-error_test.go" 'go-mode
-     '(8 nil error "undefined: fmt in fmt.Println" :checker go-test))))
+     '(8 2 error "undefined: fmt" :checker go-test))))
 
 (flycheck-ert-def-checker-test go-errcheck go nil
   (flycheck-ert-with-env
@@ -3248,27 +3246,29 @@ See https://github.com/flycheck/flycheck/issues/531 and Emacs bug #19206"))
 
 (flycheck-ert-def-checker-test go-megacheck go nil
   :tags '(language-go external-tool)
-  (flycheck-ert-with-env
-      `(("GOPATH" . ,(flycheck-ert-resource-filename "language/go")))
-    (flycheck-ert-should-syntax-check
-     "language/go/src/megacheck/megacheck1.go" 'go-mode
-     '(8 6 warning "should omit values from range; this loop is equivalent to `for range ...` (S1005)"
-         :checker go-megacheck)
-     '(12 21 warning "calling strings.Replace with n == 0 will return no results, did you mean -1? (SA1018)"
-          :checker go-megacheck)
-     '(16 6 warning "func unused is unused (U1000)"
-          :checker go-megacheck))))
+  (let ((flycheck-disabled-checkers '(go-golint)))
+    (flycheck-ert-with-env
+        `(("GOPATH" . ,(flycheck-ert-resource-filename "language/go")))
+      (flycheck-ert-should-syntax-check
+       "language/go/src/megacheck/megacheck1.go" 'go-mode
+       '(8 6 warning "should omit values from range; this loop is equivalent to `for range ...` (S1005)"
+           :checker go-megacheck)
+       '(12 21 warning "calling strings.Replace with n == 0 will return no results, did you mean -1? (SA1018)"
+            :checker go-megacheck)
+       '(16 6 warning "func unused is unused (U1000)"
+            :checker go-megacheck)))))
 
 (flycheck-ert-def-checker-test go-megacheck-disabled-checkers go nil
   :tags '(language-go external-tool)
-  (flycheck-ert-with-env
-      `(("GOPATH" . ,(flycheck-ert-resource-filename "language/go")))
-    ;; Run with simple and unused checkers disabled
-    (let ((flycheck-go-megacheck-disabled-checkers '("simple" "unused")))
-      (flycheck-ert-should-syntax-check
-       "language/go/src/megacheck/megacheck1.go" 'go-mode
-       '(12 21 warning "calling strings.Replace with n == 0 will return no results, did you mean -1? (SA1018)"
-            :checker go-megacheck)))))
+  (let ((flycheck-disabled-checkers '(go-golint)))
+    (flycheck-ert-with-env
+        `(("GOPATH" . ,(flycheck-ert-resource-filename "language/go")))
+      ;; Run with simple and unused checkers disabled
+      (let ((flycheck-go-megacheck-disabled-checkers '("simple" "unused")))
+        (flycheck-ert-should-syntax-check
+         "language/go/src/megacheck/megacheck1.go" 'go-mode
+         '(12 21 warning "calling strings.Replace with n == 0 will return no results, did you mean -1? (SA1018)"
+              :checker go-megacheck))))))
 
 (flycheck-ert-def-checker-test groovy groovy syntax-error
   ;; Work around

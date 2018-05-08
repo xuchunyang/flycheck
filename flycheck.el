@@ -9099,9 +9099,15 @@ See URL `https://racket-lang.org/'."
                (t '(bold error)))))))
   :error-filter
   (lambda (errors)
-    (flycheck-sanitize-errors (flycheck-increment-error-columns errors)))
+    (flycheck-sanitize-errors
+     (flycheck-increment-error-columns
+      (seq-remove (lambda (err)
+                    (string= "/usr/share/racket/pkgs/compiler-lib/compiler/commands/expand.rkt"
+                             (flycheck-error-filename err)))
+                  errors))))
   :error-patterns
-  ((error line-start (file-name) ":" line ":" column ":" (message) line-end))
+  ((error line-start (zero-or-more space)
+          (file-name) ":" line ":" column ":" (message) line-end))
   :modes (racket-mode scheme-mode))
 
 (flycheck-define-checker rpm-rpmlint

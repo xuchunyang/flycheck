@@ -3418,17 +3418,20 @@ Why not:
   (let ((js2-mode-show-parse-errors nil)
         (js2-mode-show-strict-warnings nil)
         (js3-mode-show-parse-errors nil)
+        (inhibit-message t)
         (flycheck-disabled-checkers
          '(javascript-eslint javascript-gjslint)))
     (flycheck-ert-should-syntax-check
      "language/javascript/syntax-error.js" '(js-mode js2-mode js3-mode rjsx-mode)
-     '(3 1 error "Unrecoverable syntax error. (75% scanned)." :checker javascript-jshint :id "E041")
+     '(3 1 error "Unrecoverable syntax error. (75% scanned)."
+         :checker javascript-jshint :id "E041")
      '(3 25 error "Expected an identifier and instead saw ')'."
          :checker javascript-jshint :id "E030"))))
 
 (flycheck-ert-def-checker-test javascript-jshint javascript nil
   :tags '(checkstyle-xml)
   (let ((flycheck-jshintrc "jshintrc")
+        (inhibit-message t)
         (flycheck-disabled-checkers
          '(javascript-eslint javascript-gjslint)))
     (flycheck-ert-should-syntax-check
@@ -3437,13 +3440,15 @@ Why not:
          :checker javascript-jshint))))
 
 (flycheck-ert-def-checker-test javascript-eslint javascript error
-  (let ((flycheck-disabled-checkers '(javascript-jshint)))
+  (let ((flycheck-disabled-checkers '(javascript-jshint))
+        (inhibit-message t))
     (flycheck-ert-should-syntax-check
      "language/javascript/syntax-error.js" flycheck-test-javascript-modes
      '(3 25 error "Parsing error: Unexpected token )" :checker javascript-eslint))))
 
 (flycheck-ert-def-checker-test javascript-eslint javascript warning
-  (let ((flycheck-disabled-checkers '(javascript-jshint)))
+  (let ((flycheck-disabled-checkers '(javascript-jshint))
+        (inhibit-message t))
     (flycheck-ert-should-syntax-check
      "language/javascript/warnings.js" flycheck-test-javascript-modes
      '(3 2 warning "Use the function form of 'use strict'." :id "strict"
@@ -3452,7 +3457,8 @@ Why not:
          :id "no-unused-vars" :checker javascript-eslint))))
 
 (flycheck-ert-def-checker-test javascript-standard javascript error
-  (let ((flycheck-checker 'javascript-standard))
+  (let ((flycheck-checker 'javascript-standard)
+        (inhibit-message t))
     (flycheck-ert-should-syntax-check
      "language/javascript/style.js" flycheck-test-javascript-modes
      '(3 10 error "Missing space before function parentheses."
@@ -3472,7 +3478,8 @@ Why not:
 
 (flycheck-ert-def-checker-test javascript-standard javascript semistandard
   (let ((flycheck-checker 'javascript-standard)
-        (flycheck-javascript-standard-executable "semistandard"))
+        (flycheck-javascript-standard-executable "semistandard")
+        (inhibit-message t))
     (flycheck-ert-should-syntax-check
      "language/javascript/style.js" flycheck-test-javascript-modes
      '(3 10 error "Missing space before function parentheses."
@@ -4266,18 +4273,21 @@ The manifest path is relative to
      '(2 nil warning ".container is deprecated" :checker scss))))
 
 (flycheck-ert-def-checker-test sh-bash (sh sh-bash) nil
-  (flycheck-ert-should-syntax-check
-   "language/sh/bash-syntax-error.bash" 'sh-mode
-   '(5 nil error "syntax error near unexpected token `fi'" :checker sh-bash)
-   '(5 nil error "`fi'" :checker sh-bash)))
+  (let ((inhibit-message t))
+    (flycheck-ert-should-syntax-check
+     "language/sh/bash-syntax-error.bash" 'sh-mode
+     '(5 nil error "syntax error near unexpected token `fi'" :checker sh-bash)
+     '(5 nil error "`fi'" :checker sh-bash))))
 
 (flycheck-ert-def-checker-test sh-posix-dash (sh sh-posix) nil
-  (flycheck-ert-should-syntax-check
-   "language/sh/posix-syntax-error.sh" 'sh-mode
-   '(3 nil error "Syntax error: \"(\" unexpected" :checker sh-posix-dash)))
+  (let ((inhibit-message t))
+    (flycheck-ert-should-syntax-check
+     "language/sh/posix-syntax-error.sh" 'sh-mode
+     '(3 nil error "Syntax error: \"(\" unexpected" :checker sh-posix-dash))))
 
 (flycheck-ert-def-checker-test sh-posix-bash (sh sh-posix) nil
-  (let ((flycheck-disabled-checkers '(sh-posix-dash)))
+  (let ((flycheck-disabled-checkers '(sh-posix-dash))
+        (inhibit-message t))
     (flycheck-ert-should-syntax-check
      "language/sh/posix-syntax-error.sh" 'sh-mode
      '(3 nil error "syntax error near unexpected token `('"
@@ -4285,9 +4295,10 @@ The manifest path is relative to
      '(3 nil error "`cat <(echo blah)'" :checker sh-posix-bash))))
 
 (flycheck-ert-def-checker-test sh-zsh (sh sh-zsh) nil
-  (flycheck-ert-should-syntax-check
-   "language/sh/zsh-syntax-error.zsh" 'sh-mode
-   '(5 nil error "parse error near `fi'" :checker sh-zsh)))
+  (let ((inhibit-message t))
+    (flycheck-ert-should-syntax-check
+     "language/sh/zsh-syntax-error.zsh" 'sh-mode
+     '(5 nil error "parse error near `fi'" :checker sh-zsh))))
 
 (flycheck-ert-def-checker-test sh-shellcheck sh nil
   :tags '(checkstyle-xml)

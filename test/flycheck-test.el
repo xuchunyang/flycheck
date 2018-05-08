@@ -3990,8 +3990,8 @@ Why not:
         :id "Style/GuardClause":checker ruby-rubocop)
    '(10 5 info "Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`."
         :id "Style/IfUnlessModifier" :checker ruby-rubocop)
-   '(10 8 warning "Literal `true` appeared in a condition."
-        :id "Lint/LiteralInCondition" :checker ruby-rubocop)
+   '(10 8 warning "Literal `true` appeared as a condition."
+        :id "Lint/LiteralAsCondition" :checker ruby-rubocop)
    '(10 13 info "Do not use `then` for multi-line `if`."
         :id "Style/MultilineIfThen" :checker ruby-rubocop)
    '(11 7 info "Redundant `return` detected."

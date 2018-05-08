@@ -3358,12 +3358,11 @@ Why not:
   (let ((flycheck-disabled-checkers '(haskell-stack-ghc)))
     (flycheck-ert-should-syntax-check
      "language/haskell/Error.hs" 'haskell-mode
-     '(4 16 error "* Couldn't match type `Bool' with `[Char]'
-  Expected type: String
-    Actual type: Bool
-* In the first argument of `putStrLn', namely `True'
-  In the expression: putStrLn True
-  In an equation for `foo': foo = putStrLn True" :checker haskell-ghc))))
+     '(4 16 error "Couldn't match type `Bool' with `[Char]'
+Expected type: String
+  Actual type: Bool
+In the first argument of `putStrLn', namely `True'
+In the expression: putStrLn True" :checker haskell-ghc))))
 
 (flycheck-ert-def-checker-test (haskell-ghc haskell-hlint) haskell literate
   (let ((flycheck-disabled-checkers '(haskell-stack-ghc)))

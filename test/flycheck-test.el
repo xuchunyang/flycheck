@@ -3764,17 +3764,23 @@ Why not:
      '(5 1 warning "Unused import antigravit" :id "unused-import"
          :checker python-pylint)
      '(7 1 info "Missing class docstring" :id "missing-docstring" :checker python-pylint)
-     '(9 5 info "Invalid method name \"withEggs\"" :id "invalid-name"
-         :checker python-pylint)
+     '(9 5 info "Method name \"withEggs\" doesn't conform to snake_case naming style"
+         :id "invalid-name" :checker python-pylint)
      '(9 5 info "Missing method docstring" :id "missing-docstring" :checker python-pylint)
      '(9 5 warning "Method could be a function" :id "no-self-use"
          :checker python-pylint)
      '(12 1 info "No space allowed around keyword argument assignment"
           :id "bad-whitespace" :checker python-pylint)
      '(12 5 info "Missing method docstring" :id "missing-docstring" :checker python-pylint)
-     '(12 5 warning "Method could be a function" :id "no-self-use"
-          :checker python-pylint)
+     '(12 5 warning "Either all return statements in a function should return an expression, or none of them should."
+          :id "inconsistent-return-statements" :checker python-pylint)
+     '(12 5 warning "Method could be a function"
+          :id "no-self-use" :checker python-pylint)
      '(14 16 error "Module 'sys' has no 'python_version' member" :id "no-member"
+          :checker python-pylint)
+     '(15 1 info "Unnecessary parens after 'print' keyword" :id "superfluous-parens"
+          :checker python-pylint)
+     '(17 1 info "Unnecessary parens after 'print' keyword" :id "superfluous-parens"
           :checker python-pylint)
      '(22 1 error "Undefined variable 'antigravity'" :id "undefined-variable"
           :checker python-pylint))))
@@ -3791,17 +3797,23 @@ Why not:
      '(5 1 warning "Unused import antigravit" :id "W0611"
          :checker python-pylint)
      '(7 1 info "Missing class docstring" :id "C0111" :checker python-pylint)
-     '(9 5 info "Invalid method name \"withEggs\"" :id "C0103"
-         :checker python-pylint)
+     '(9 5 info "Method name \"withEggs\" doesn't conform to snake_case naming style"
+         :id "C0103" :checker python-pylint)
      '(9 5 info "Missing method docstring" :id "C0111" :checker python-pylint)
      '(9 5 warning "Method could be a function" :id "R0201"
          :checker python-pylint)
      '(12 1 info "No space allowed around keyword argument assignment"
           :id "C0326" :checker python-pylint)
      '(12 5 info "Missing method docstring" :id "C0111" :checker python-pylint)
-     '(12 5 warning "Method could be a function" :id "R0201"
-          :checker python-pylint)
+     '(12 5 warning "Either all return statements in a function should return an expression, or none of them should."
+          :id "R1710" :checker python-pylint)
+     '(12 5 warning "Method could be a function"
+          :id "R0201" :checker python-pylint)
      '(14 16 error "Module 'sys' has no 'python_version' member" :id "E1101"
+          :checker python-pylint)
+     '(15 1 info "Unnecessary parens after 'print' keyword" :id "C0325"
+          :checker python-pylint)
+     '(17 1 info "Unnecessary parens after 'print' keyword" :id "C0325"
           :checker python-pylint)
      '(22 1 error "Undefined variable 'antigravity'" :id "E0602"
           :checker python-pylint))))

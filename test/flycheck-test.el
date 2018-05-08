@@ -3506,6 +3506,7 @@ Why not:
 
 (flycheck-ert-def-checker-test less less file-error
   (let* ((candidates (list "no-such-file.less"
+                           "npm://no-such-file.less"
                            "no-such-file.less"))
          (message (string-join candidates ",")))
     (flycheck-ert-should-syntax-check

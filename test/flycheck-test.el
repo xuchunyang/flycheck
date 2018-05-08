@@ -4230,7 +4230,7 @@ The manifest path is relative to
 (flycheck-ert-def-checker-test scheme-chicken scheme nil
   (flycheck-ert-should-syntax-check
    "language/chicken/error.scm" 'flycheck/chicken-mode
-   '(2 nil warning "in procedure call to `g1', expected a value of type `(procedure (* *) *)' but was given a value of type `number'"
+   '(2 nil warning "in procedure call to `g12', expected a value of type `(procedure (* *) *)', but was given a value of type `number'"
        :checker scheme-chicken)))
 
 (flycheck-ert-def-checker-test scheme-chicken scheme syntax-error

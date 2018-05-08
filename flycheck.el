@@ -209,6 +209,9 @@ attention to case differences."
     llvm-llc
     lua-luacheck
     lua
+    markdown-markdownlint-cli
+    markdown-mdl
+    nix
     perl
     perl-perlcritic
     php
@@ -226,9 +229,6 @@ attention to case differences."
     r-lintr
     racket
     rpm-rpmlint
-    markdown-markdownlint-cli
-    markdown-mdl
-    nix
     rst-sphinx
     rst
     ruby-rubocop

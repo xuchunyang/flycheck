@@ -3662,18 +3662,19 @@ Why not:
   ;; because Click, used by ProseLint, when running with python 3 will refuse to
   ;; work unless an Unicode locale is exported. See:
   ;; http://click.pocoo.org/5/python3/#python-3-surrogate-handling
-  (flycheck-ert-with-env '(("LC_ALL" . nil))
-    (flycheck-ert-should-syntax-check
-     "language/text.txt" 'text-mode
-     '(1 7 warning "Substitute 'damn' every time you're inclined to write 'very;' your editor will delete it and the writing will be just as it should be."
-         :id "weasel_words.very"
-         :checker proselint)
-     '(2 4 warning "Redundancy. Use 'associate' instead of 'associate together'."
-         :id "redundancy.garner"
-         :checker proselint)
-     '(3 5 warning "Gender bias. Use 'lawyer' instead of 'lady lawyer'."
-         :id "sexism.misc"
-         :checker proselint))))
+  (let ((flycheck-disabled-checkers '(markdown-markdownlint-cli markdown-mdl)))
+    (flycheck-ert-with-env '(("LC_ALL" . nil))
+      (flycheck-ert-should-syntax-check
+       "language/text.txt" '(text-mode markdown-mode)
+       '(1 7 warning "Substitute 'damn' every time you're inclined to write 'very;' your editor will delete it and the writing will be just as it should be."
+           :id "weasel_words.very"
+           :checker proselint)
+       '(2 4 warning "Redundancy. Use 'associate' instead of 'associate together'."
+           :id "redundancy.garner"
+           :checker proselint)
+       '(3 5 warning "Gender bias. Use 'lawyer' instead of 'lady lawyer'."
+           :id "sexism.misc"
+           :checker proselint)))))
 
 (flycheck-ert-def-checker-test processing processing syntax-error
   (flycheck-ert-should-syntax-check
@@ -3896,10 +3897,11 @@ Why not:
        :id "MD041/first-line-h1" :checker markdown-markdownlint-cli)))
 
 (flycheck-ert-def-checker-test markdown-mdl markdown nil
-  (flycheck-ert-should-syntax-check
-   "language/markdown.md" 'markdown-mode
-   '(1 nil error "First header should be a top level header"
-       :id "MD002" :checker markdown-mdl)))
+  (let ((flycheck-disabled-checkers '(markdown-markdownlint-cli)))
+    (flycheck-ert-should-syntax-check
+     "language/markdown.md" 'markdown-mode
+     '(1 nil error "First header should be a top level header"
+         :id "MD002" :checker markdown-mdl))))
 
 (flycheck-ert-def-checker-test nix nix nil
   (flycheck-ert-should-syntax-check

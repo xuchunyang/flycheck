@@ -152,7 +152,7 @@ After BODY, restore the old state of Global Flycheck Mode."
 (defmacro flycheck-ert-with-env (env &rest body)
   "Add ENV to `process-environment' in BODY.
 
-Execute BODY with a `process-environment' with contains all
+Execute BODY with a `process-environment' wich contains all
 variables from ENV added.
 
 ENV is an alist, where each cons cell `(VAR . VALUE)' is a

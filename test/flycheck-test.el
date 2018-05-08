@@ -4014,7 +4014,7 @@ Why not:
      '(16 nil warning "possibly useless use of == in void context"
           :checker ruby))))
 
-(flycheck-ert-def-checker-test ruby-jruby ruby ()
+(flycheck-ert-def-checker-test ruby-jruby ruby nil
   (let ((flycheck-disabled-checkers '(ruby-rubocop ruby-reek ruby-rubylint ruby)))
     (flycheck-ert-should-syntax-check
      "language/ruby/warnings.rb" 'ruby-mode

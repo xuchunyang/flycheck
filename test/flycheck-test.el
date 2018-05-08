@@ -4279,7 +4279,7 @@ The manifest path is relative to
   (flycheck-ert-should-syntax-check
    "language/scss/error.scss" 'scss-mode
    '(3 1 error "Syntax Error: Invalid CSS after \"...    c olor: red\": expected \"{\", was \";\""
-       :checker scss-lint)))
+       :checker scss-lint :id "Syntax")))
 
 (flycheck-ert-def-checker-test scss scss nil
   (let ((flycheck-disabled-checkers '(scss-lint)))

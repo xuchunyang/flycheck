@@ -2695,10 +2695,11 @@ evaluating BODY."
 ;;; Built-in checkers
 
 ;; Tell the byte compiler about the variables we'll use
-(defvar js2-mode-show-strict-warnings)
-(defvar js2-mode-show-parse-errors)
-(defvar js3-mode-show-parse-errors)
-(defvar python-indent-guess-indent-offset)
+(eval-when-compile
+  (defvar js2-mode-show-strict-warnings)
+  (defvar js2-mode-show-parse-errors)
+  (defvar js3-mode-show-parse-errors)
+  (defvar python-indent-guess-indent-offset))
 
 (flycheck-ert-def-checker-test ada-gnat ada syntax-error
   (flycheck-ert-should-syntax-check
@@ -3872,9 +3873,7 @@ Why not:
        :checker rpm-rpmlint)
    '(22 nil warning "macro-in-%changelog %{_bindir}" :checker rpm-rpmlint)))
 
-(flycheck-ert-def-checker-test
-    tcl-nagelfar tcl nil
-  :tags '(language-tcl external-tool)
+(flycheck-ert-def-checker-test tcl-nagelfar tcl nil
   (flycheck-ert-should-syntax-check
    "language/tcl/test.tcl" 'tcl-mode
    '(7 nil warning "Expr without braces"
@@ -3884,9 +3883,7 @@ Why not:
    '(9 nil info "Suspicious variable name \"val_${val}\""
        :checker tcl-nagelfar)
    '(12 nil error "Wrong number of arguments \(4\) to \"set\""
-        :checker tcl-nagelfar)
-   )
-  )
+        :checker tcl-nagelfar)))
 
 (flycheck-ert-def-checker-test markdown-markdownlint-cli markdown nil
   (flycheck-ert-should-syntax-check

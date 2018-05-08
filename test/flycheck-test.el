@@ -2753,16 +2753,17 @@ evaluating BODY."
 
 (flycheck-ert-def-checker-test c/c++-clang (c c++) included-file-error
   (let ((flycheck-clang-include-path '("./include"))
-        (flycheck-disabled-checkers '(c/c++-gcc)))
+        (flycheck-disabled-checkers '(c/c++-gcc))
+        (file (flycheck-ert-resource-filename "language/c_c++/warning.c")))
     (flycheck-ert-should-syntax-check
      "language/c_c++/in-included-file.cpp" 'c++-mode
-     `(3 nil warning "In include ./warning.c" :checker c/c++-clang))))
+     `(3 nil warning ,(concat "In include " file) :checker c/c++-clang))))
 
 (flycheck-ert-def-checker-test c/c++-gcc (c c++) error
   (let ((flycheck-disabled-checkers '(c/c++-clang)))
     (flycheck-ert-should-syntax-check
      "language/c_c++/error.cpp" 'c++-mode
-     '(2 20 error "'struct A' has no member named 'bar'"
+     '(2 18 error "'struct A' has no member named 'bar'"
          :checker c/c++-gcc))))
 
 (flycheck-ert-def-checker-test c/c++-gcc (c c++) fatal-error

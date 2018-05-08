@@ -3011,14 +3011,15 @@ See https://github.com/flycheck/flycheck/issues/531 and Emacs bug #19206"))
 
 (flycheck-ert-def-checker-test (emacs-lisp emacs-lisp-checkdoc) emacs-lisp
                                checks-compressed-file
-  (flycheck-ert-should-syntax-check
-   "language/emacs-lisp/warnings.el.gz" 'emacs-lisp-mode
-   '(12 nil warning "First sentence should end with punctuation"
-        :checker emacs-lisp-checkdoc)
-   '(16 6 warning "foobar called with 1 argument, but accepts only 0"
-        :checker emacs-lisp)
-   '(21 1 warning "the function `dummy-package-foo' is not known to be defined."
-        :checker emacs-lisp)))
+  (let ((inhibit-message t))
+    (flycheck-ert-should-syntax-check
+     "language/emacs-lisp/warnings.el.gz" 'emacs-lisp-mode
+     '(12 nil warning "First sentence should end with punctuation"
+          :checker emacs-lisp-checkdoc)
+     '(16 6 warning "foobar called with 1 argument, but accepts only 0"
+          :checker emacs-lisp)
+     '(21 1 warning "the function `dummy-package-foo' is not known to be defined."
+          :checker emacs-lisp))))
 
 (flycheck-ert-def-checker-test emacs-lisp emacs-lisp syntax-error
   (let ((flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
@@ -4401,13 +4402,15 @@ The manifest path is relative to
        :checker vhdl-ghdl)))
 
 (flycheck-ert-def-checker-test xml-xmlstarlet xml nil
-  (flycheck-ert-should-syntax-check
-   "language/xml.xml" 'nxml-mode
-   '(4 10 error "Opening and ending tag mismatch: spam line 3 and with"
-       :checker xml-xmlstarlet)))
+  (let ((inhibit-message t))
+    (flycheck-ert-should-syntax-check
+     "language/xml.xml" 'nxml-mode
+     '(4 10 error "Opening and ending tag mismatch: spam line 3 and with"
+         :checker xml-xmlstarlet))))
 
 (flycheck-ert-def-checker-test xml-xmllint xml nil
-  (let ((flycheck-disabled-checkers '(xml-xmlstarlet)))
+  (let ((flycheck-disabled-checkers '(xml-xmlstarlet))
+        (inhibit-message t))
     (flycheck-ert-should-syntax-check
      "language/xml.xml" 'nxml-mode
      '(4 nil error "parser error : Opening and ending tag mismatch: spam line 3 and with"

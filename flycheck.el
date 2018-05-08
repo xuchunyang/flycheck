@@ -6719,7 +6719,8 @@ See URL `http://www.foodcritic.io'."
             (option-list "--tags" flycheck-foodcritic-tags)
             source-inplace)
   :error-patterns
-  ((error line-start (message) ": " (file-name) ":" line line-end))
+  ((error line-start (id (one-or-more alnum)) ": "
+          (message) ": " (file-name) ":" line line-end))
   :modes (enh-ruby-mode ruby-mode)
   :predicate
   (lambda ()

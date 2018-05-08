@@ -2830,10 +2830,19 @@ evaluating BODY."
 (flycheck-ert-def-checker-test chef-foodcritic chef nil
   (flycheck-ert-should-syntax-check
    "language/chef/recipes/error.rb" 'ruby-mode
-   '(3 nil error "FC002: Avoid string interpolation where not required"
-       :checker chef-foodcritic)
-   '(11 nil error "FC004: Use a service resource to start and stop services"
-        :checker chef-foodcritic)))
+   `(1 nil error "Missing README in markdown format"
+       :checker chef-foodcritic :id "FC011"
+       :filename ,(flycheck-ert-resource-filename "language/chef/README.md"))
+   `(1 nil error "Cookbook without metadata.rb file"
+       :checker chef-foodcritic :id "FC031"
+       :filename ,(flycheck-ert-resource-filename "language/chef/metadata.rb"))
+   `(1 nil error "Missing LICENSE file"
+       :checker chef-foodcritic :id "FC071"
+       :filename ,(flycheck-ert-resource-filename "language/chef/LICENSE"))
+   '(3 nil error "Avoid string interpolation where not required"
+       :checker chef-foodcritic :id "FC002")
+   '(11 nil error "Use a service resource to start and stop services"
+        :checker chef-foodcritic :id "FC004")))
 
 (flycheck-ert-def-checker-test coffee coffee syntax-error
   (flycheck-ert-should-syntax-check
